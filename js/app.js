@@ -70,7 +70,7 @@ function addToCart(id, qty=1){
   updateCartUI();
   showToast("به سبد خرید اضافه شد");
   const cartButton = qs("[data-drawer='cart']");
-  if(cartButton){ cartButton.classList.remove("cart-pop"); requestAnimationFrame(()=>cartButton.classList.add("cart-pop")); }
+  if(cartButton){ cartButton.classList.remove("cart-pop"); void cartButton.offsetWidth; cartButton.classList.add("cart-pop"); }
 }
 function removeFromCart(id){
   store.cart = store.cart.filter(x => x.id !== Number(id));
@@ -119,8 +119,7 @@ function renderCartDrawer(){
       return `<div class="drawer-cart-item"><img src="${p.image}" width="64" height="64" alt=""><div style="flex:1"><h4>${p.title}</h4><p>${fa(item.qty)} عدد · ${fa(p.price*item.qty)} تومان</p></div><button data-remove="${p.id}" aria-label="حذف">✕</button></div>`;
     }).join("");
   }
-  const t=cartTotals();
-  const total=qs("#drawer-total"); if(total) total.textContent=fa(t.total)+" تومان";
+  const total=qs("#drawer-total"); if(total) total.textContent=fa(cartTotals().total)+" تومان";
 }
 
 function toggleWish(id){
@@ -144,12 +143,51 @@ function openDrawer(name){
   const el=qs(`#${name}-drawer`); if(!el) return;
   el.classList.add("active"); document.body.style.overflow="hidden";
 }
-function closeDrawers(){ qsa(".drawer.active").forEach(x=>x.classList.remove("active")); document.body.style.overflow=""; }
+function closeDrawers(){
+  qsa(".drawer.active").forEach(x=>x.classList.remove("active"));
+  const filters = qs("#filters");
+  if(filters && filters.classList.contains("active") && window.innerWidth <= 820){
+    // keep filter drawer close handling separate
+    filters.classList.remove("active");
+  }
+  if(!qs(".drawer.active")) document.body.style.overflow="";
+}
+function closeFilterDrawer(){
+  const f = qs("#filters");
+  if(f) f.classList.remove("active");
+  if(!qs(".drawer.active")) document.body.style.overflow="";
+}
+
 let toastTimer;
 function showToast(text){
   const el=qs("#toast"); if(!el) return;
   el.textContent=text; el.classList.add("active"); clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>el.classList.remove("active"),2200);
+  toastTimer=setTimeout(()=>el.classList.remove("active"),2400);
+}
+
+// THEME TOGGLE - persistent, always available
+function toggleTheme(){
+  const isDark = document.documentElement.classList.toggle("dark");
+  try{ localStorage.setItem("gharaati_dark", isDark ? "1" : "0"); }catch{}
+  updateThemeIcons(isDark);
+  // pop animation
+  qsa("[data-dark]").forEach(btn=>{
+    btn.classList.remove("active-pop");
+    void btn.offsetWidth;
+    btn.classList.add("active-pop");
+    setTimeout(()=>btn.classList.remove("active-pop"),400);
+  });
+}
+function updateThemeIcons(isDark){
+  qsa(".fab-icon").forEach(icon=>{
+    icon.textContent = isDark ? "☀" : "☾";
+  });
+  // also update any theme-toggle inner icons visibility handled by CSS, but we update fab
+}
+function initTheme(){
+  const saved = localStorage.getItem("gharaati_dark") === "1";
+  document.documentElement.classList.toggle("dark", saved);
+  updateThemeIcons(saved);
 }
 
 function initSearch(){
@@ -167,7 +205,9 @@ function initSearch(){
     input.addEventListener("input",update);
     input.addEventListener("focus",update);
   });
-  document.addEventListener("click",e=>{if(!e.target.closest(".search-wrap")) qsa(".search-suggest").forEach(x=>x.classList.remove("active"));});
+  document.addEventListener("click",e=>{
+    if(!e.target.closest(".search-wrap")) qsa(".search-suggest").forEach(x=>x.classList.remove("active"));
+  });
 }
 
 let revealObserver;
@@ -175,7 +215,7 @@ function initReveal(){
   if(matchMedia("(prefers-reduced-motion: reduce)").matches){qsa(".reveal").forEach(x=>x.classList.add("in-view"));return;}
   revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
     if(entry.isIntersecting){entry.target.classList.add("in-view");revealObserver.unobserve(entry.target);}
-  }),{threshold:.08,rootMargin:"0px 0px -25px"});
+  }),{threshold:.08,rootMargin:"0px 0px -30px"});
   observeReveals(document);
 }
 function observeReveals(root){
@@ -205,6 +245,13 @@ function initHome(){
     const val=btn.dataset.productFilter;
     renderProducts("products-featured",val==="all"?products:products.filter(p=>p.cat===val));
   }));
+  // Gallery lightbox-ish toast on mobile
+  qsa(".gallery-item").forEach((el,i)=>{
+    el.addEventListener("click",()=>{
+      const alt = el.querySelector("img")?.alt || `تصویر ${i+1}`;
+      showToast(alt);
+    });
+  });
 }
 function initCategory(){
   const target=qs("#products-category"); if(!target) return;
@@ -247,6 +294,34 @@ function renderCartPage(){
   Object.entries(values).forEach(([sel,val])=>{const el=qs(sel);if(el)el.textContent=fa(val)+" تومان";});
 }
 
+// BACK TO HOME injection for non-home pages
+function initBackHome(){
+  const path = location.pathname.split("/").pop() || "index.html";
+  const isHome = path === "" || path === "index.html" || path === "index.htm";
+  if(isHome) return;
+
+  // If bar doesn't exist, inject it
+  if(!qs("#back-home-bar")){
+    const main = qs("main") || qs(".page-hero") || document.body;
+    const bar = document.createElement("div");
+    bar.className = "container";
+    bar.innerHTML = `<div class="back-home-bar" id="back-home-bar"><a href="index.html" class="back-home-link"><i>←</i> بازگشت به صفحه اصلی</a></div>`;
+    if(main && main.firstChild){
+      main.prepend(bar.firstChild);
+    } else {
+      document.body.prepend(bar.firstChild);
+    }
+  }
+
+  // Floating pill for mobile
+  if(!qs(".back-home-pill-floating")){
+    const pill = document.createElement("div");
+    pill.className = "back-home-pill-floating";
+    pill.innerHTML = `<a href="index.html">⌂ بازگشت به صفحه اصلی</a>`;
+    document.body.appendChild(pill);
+  }
+}
+
 function handleClick(e){
   const add=e.target.closest("[data-add]"); if(add){e.preventDefault();addToCart(add.dataset.add);return;}
   const remove=e.target.closest("[data-remove]"); if(remove){removeFromCart(remove.dataset.remove);return;}
@@ -254,40 +329,38 @@ function handleClick(e){
   const wish=e.target.closest("[data-wish]"); if(wish){e.preventDefault();toggleWish(wish.dataset.wish);return;}
   const compare=e.target.closest("[data-compare]"); if(compare){e.preventDefault();toggleCompare(compare.dataset.compare);return;}
   const drawer=e.target.closest("[data-drawer]"); if(drawer){e.preventDefault();openDrawer(drawer.dataset.drawer);return;}
-  if(e.target.closest("[data-close-drawer]")){closeDrawers();return;}
-  if(e.target.closest("[data-dark]")){document.documentElement.classList.toggle("dark");try{localStorage.setItem("gharaati_dark",document.documentElement.classList.contains("dark")?"1":"0");}catch{}return;}
-  const filter=e.target.closest("[data-filter-toggle]");if(filter){qs("#filters")?.classList.toggle("active");return;}
+  if(e.target.closest("[data-close-drawer]")){closeDrawers();closeFilterDrawer();return;}
+  if(e.target.closest("[data-dark]")){e.preventDefault();toggleTheme();return;}
+  const filter=e.target.closest("[data-filter-toggle]");
+  if(filter){
+    e.preventDefault();
+    const f=qs("#filters");
+    if(f){
+      const willOpen = !f.classList.contains("active");
+      f.classList.toggle("active");
+      document.body.style.overflow = willOpen ? "hidden" : "";
+    }
+    return;
+  }
   const thumb=e.target.closest("[data-thumb]");if(thumb){qsa("[data-thumb]").forEach(x=>x.classList.remove("active"));thumb.classList.add("active");const img=qs("#product-image");if(img)img.src=thumb.dataset.thumb;return;}
   const checkout=e.target.closest("[data-checkout]");if(checkout){qs("#checkout-form")?.classList.add("active");qs("#checkout-form")?.scrollIntoView({behavior:"smooth",block:"center"});return;}
   const submit=e.target.closest("[data-demo-submit]");if(submit){showToast("این بخش در نسخه نهایی فعال می‌شود");return;}
+  // Close drawers when clicking backdrop
+  if(e.target.classList.contains("drawer-backdrop")){closeDrawers();closeFilterDrawer();return;}
 }
 
 function boot(){
-  document.documentElement.classList.toggle("dark",localStorage.getItem("gharaati_dark")==="1");
-
-  function updateThemeIcon() {
-    const btn = document.querySelector('.theme-toggle');
-    if (!btn) return;
-    btn.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
-  }
-  updateThemeIcon();
-
-  // Also update icon when theme changes
-  document.addEventListener('click', (e) => {
-    if (e.target.closest('[data-dark]')) {
-      setTimeout(updateThemeIcon, 10);
-    }
-  });
-
+  initTheme();
   document.addEventListener("click",handleClick);
-  document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDrawers();});
-  initReveal();initScrollProgress();initSearch();initCountdown();initHome();initCategory();initProduct();renderCartPage();updateCartUI();
+  document.addEventListener("keydown",e=>{
+    if(e.key==="Escape"){closeDrawers();closeFilterDrawer(); qsa(".search-suggest").forEach(x=>x.classList.remove("active"));}
+  });
+  initReveal();initScrollProgress();initSearch();initCountdown();initHome();initCategory();initProduct();renderCartPage();updateCartUI();initBackHome();
   requestAnimationFrame(()=>requestAnimationFrame(()=>document.documentElement.classList.add("ready")));
 }
 
 document.addEventListener("DOMContentLoaded",boot);
 
-// Tiny global API for simple demo buttons.
 window.addToCart=addToCart;
 window.renderProducts=renderProducts;
 window.products=products;
