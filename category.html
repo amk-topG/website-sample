@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>محصولات | کافی نت و لوازم تحریری قرائتی</title>
+  <meta name="description" content="محصولات لوازم تحریر قرائتی">
+  <meta name="theme-color" content="#4f46e5">
+  <link rel="icon" href="assets/brand-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <script>try{if(localStorage.getItem('gharaati_dark')==='1')document.documentElement.classList.add('dark')}catch(e){}</script>
+</head>
+<body>
+  <div class="page-loader" aria-hidden="true"><div><div class="loader-mark"><img src="assets/brand-mark.svg" alt=""></div><div class="loader-line"></div></div></div>
+  <div class="scroll-progress" id="scroll-progress"></div>
+  <div class="topbar"><div class="container topbar-inner"><div class="topbar-group"><span>📞 ۰۹۱۲ ۱۲۳ ۴۵۶۷</span><span>ارسال سریع</span></div><div class="topbar-group"><a href="index.html#contact">تماس با ما</a><a href="#" data-dark>☾ حالت شب</a></div></div></div>
+
+  <header class="header"><div class="container header-inner">
+    <a class="logo" href="index.html"><img src="assets/brand-mark.svg" width="46" height="46" alt=""><span class="logo-text">کافی نت و لوازم تحریری قرائتی<small>GHARAATI</small></span></a>
+    <div class="search-wrap"><label class="search-box"><span>⌕</span><input data-search type="search" placeholder="جستجوی محصول..." aria-label="جستجو"></label><div class="search-suggest"></div></div>
+    <div class="header-actions"><button class="icon-btn hide-mobile" data-dark aria-label="حالت شب">☾</button><button class="icon-btn" data-drawer="cart" aria-label="سبد خرید">🛒<span class="count" data-cart-count style="display:none">۰</span></button><button class="icon-btn menu-btn" data-drawer="menu" aria-label="منو">☰</button></div>
+  </div></header>
+  <nav class="nav"><div class="container nav-inner"><a class="nav-cta" href="category.html">همه محصولات</a><a href="category.html?cat=دفتر%20و%20کاغذ">دفتر و کاغذ</a><a href="category.html?cat=نوشت%20افزار">نوشت افزار</a><a href="category.html?cat=لوازم%20نقاشی">نقاشی و طراحی</a><a href="category.html?cat=جامدادی%20و%20کیف">کیف و جامدادی</a><a href="category.html?cat=لوازم%20اداری">لوازم اداری</a></div></nav>
+  <div class="mobile-search"><div class="container search-wrap"><label class="search-box"><span>⌕</span><input data-search type="search" placeholder="جستجوی محصول..." aria-label="جستجو"></label><div class="search-suggest"></div></div></div>
+
+  <main>
+    <section class="page-hero"><div class="container"><div class="page-banner reveal"><div class="breadcrumbs"><a href="index.html">خانه</a><span>◀</span><b>محصولات</b></div><h1 id="category-title">همه محصولات</h1><p>انتخاب ساده برای مدرسه، دانشگاه و محل کار.</p></div></div></section>
+    <div class="container catalog-layout">
+      <aside class="filters" id="filters">
+        <div class="filter-head"><h2>فیلترها</h2><button type="button">پاک کردن</button></div>
+        <div class="filter-group"><h3>دسته‌بندی</h3><div class="filter-options">
+          <label><input data-cat-check type="checkbox" value="دفتر و کاغذ"> دفتر و کاغذ</label>
+          <label><input data-cat-check type="checkbox" value="نوشت افزار"> نوشت افزار</label>
+          <label><input data-cat-check type="checkbox" value="لوازم نقاشی"> نقاشی و طراحی</label>
+          <label><input data-cat-check type="checkbox" value="جامدادی و کیف"> کیف و جامدادی</label>
+          <label><input data-cat-check type="checkbox" value="لوازم اداری"> لوازم اداری</label>
+        </div></div>
+        <div class="filter-group"><h3>برند</h3><div class="filter-options"><label><input type="checkbox"> پاپکو</label><label><input type="checkbox"> پنتر</label><label><input type="checkbox"> آریا</label><label><input type="checkbox"> فابرکاستل</label></div></div>
+        <div class="filter-group"><h3>محدوده قیمت</h3><div class="price-inputs"><input type="number" placeholder="از"><input type="number" placeholder="تا"></div></div>
+        <div class="filter-group"><div class="filter-options"><label><input type="checkbox"> فقط کالاهای موجود</label><label><input type="checkbox"> فقط تخفیف‌دار</label></div></div>
+      </aside>
+      <section aria-label="فهرست محصولات">
+        <div class="sort-bar">
+          <button class="btn btn-light filter-toggle" style="padding:8px 12px" data-filter-toggle>فیلترها</button>
+          <span>مرتب‌سازی:</span>
+          <div class="filter-chips"><button class="chip active" data-sort="popular">محبوب</button><button class="chip" data-sort="cheap">ارزان‌ترین</button><button class="chip" data-sort="expensive">گران‌ترین</button></div>
+          <span class="sort-count" id="catalog-count">۸ کالا</span>
+        </div>
+        <div class="products-grid catalog-products" id="products-category"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a class="logo" href="index.html"><img src="assets/brand-mark.svg" width="46" height="46" alt=""><span class="logo-text">کافی نت و لوازم تحریری قرائتی<small>GHARAATI</small></span></a><p>انتخاب ساده و سریع لوازم تحریر.</p></div><div><h4>فروشگاه</h4><ul><li><a href="index.html">خانه</a></li><li><a href="category.html">محصولات</a></li><li><a href="cart.html">سبد خرید</a></li></ul></div><div><h4>تماس</h4><ul><li>۰۹۱۲ ۱۲۳ ۴۵۶۷</li><li>آدرس فروشگاه شما</li></ul></div></div><div class="footer-bottom"><span>© ۱۴۰۵ کافی نت و لوازم تحریری قرائتی</span><span>نسخه نمایشی</span></div></div></footer>
+
+  <nav class="bottom-nav"><a href="index.html"><i>⌂</i>خانه</a><a class="active" href="category.html"><i>▦</i>محصولات</a><a href="#" data-drawer="cart"><i>🛒</i>سبد</a><a href="index.html#contact"><i>☎</i>تماس</a></nav>
+  <div class="drawer" id="cart-drawer"><div class="drawer-backdrop" data-close-drawer></div><aside class="drawer-panel"><div class="drawer-head"><b>سبد خرید (<span data-cart-count>۰</span>)</b><button data-close-drawer>✕</button></div><div class="drawer-body" id="cart-drawer-body"></div><div class="drawer-foot"><div class="summary-row total"><span>جمع:</span><b id="drawer-total">۰ تومان</b></div><a class="btn btn-primary" style="width:100%;margin-top:10px" href="cart.html">ادامه خرید</a></div></aside></div>
+  <div class="drawer menu" id="menu-drawer"><div class="drawer-backdrop" data-close-drawer></div><aside class="drawer-panel"><div class="drawer-head"><b>منو</b><button data-close-drawer>✕</button></div><div class="drawer-body"><div class="menu-links"><a href="index.html">خانه</a><a href="category.html">محصولات</a><a href="cart.html">سبد خرید</a><button data-dark>حالت شب و روز</button></div></div></aside></div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="js/app.js" defer></script>
+</body>
+</html>

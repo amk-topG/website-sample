@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>سبد خرید | کافی نت و لوازم تحریری قرائتی</title>
+  <meta name="description" content="سبد خرید و ثبت سفارش.">
+  <meta name="theme-color" content="#4f46e5">
+  <link rel="icon" href="assets/brand-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <script>try{if(localStorage.getItem('gharaati_dark')==='1')document.documentElement.classList.add('dark')}catch(e){}</script>
+</head>
+<body>
+  <div class="page-loader" aria-hidden="true"><div><div class="loader-mark"><img src="assets/brand-mark.svg" alt=""></div><div class="loader-line"></div></div></div>
+  <div class="scroll-progress" id="scroll-progress"></div>
+  <header class="header"><div class="container header-inner">
+    <a class="logo" href="index.html"><img src="assets/brand-mark.svg" width="46" height="46" alt=""><span class="logo-text">کافی نت و لوازم تحریری قرائتی<small>GHARAATI</small></span></a>
+    <div style="margin-right:auto;display:flex;align-items:center;gap:8px;font-size:10px;color:var(--muted)"><span class="badge badge-popular">۱. سبد خرید</span><span>—</span><span>۲. اطلاعات</span><span>—</span><span>۳. ثبت</span></div>
+    <button class="icon-btn hide-mobile" data-dark aria-label="حالت شب">☾</button>
+  </div></header>
+
+  <main>
+    <div class="container cart-layout">
+      <section class="cart-main">
+        <div class="breadcrumbs"><a href="index.html">خانه</a><span>◀</span><b>سبد خرید</b></div>
+        <h1>سبد خرید <span style="font-size:12px;color:var(--muted)">(<span data-cart-count>۰</span> کالا)</span></h1>
+        <div class="cart-items" id="cart-page-items"></div>
+        <div class="coupon-box"><b style="font-size:12px">کد تخفیف</b><div class="coupon-row" style="margin-top:8px"><input placeholder="کد را وارد کنید"><button class="btn btn-light" type="button">اعمال</button></div></div>
+      </section>
+
+      <aside>
+        <div class="cart-summary reveal">
+          <h2>خلاصه سفارش</h2>
+          <div class="summary-row"><span>قیمت کالاها</span><span id="cart-old">۰ تومان</span></div>
+          <div class="summary-row" style="color:#15803d"><span>تخفیف</span><span id="cart-discount">۰ تومان</span></div>
+          <div class="summary-row"><span>ارسال</span><span>در مرحله بعد</span></div>
+          <div class="summary-row total"><span>جمع سفارش</span><span id="cart-total">۰ تومان</span></div>
+          <button class="btn btn-primary" style="width:100%;margin-top:12px" data-checkout>ادامه و ثبت سفارش ←</button>
+          <p style="font-size:9px;color:var(--muted);text-align:center;margin-top:8px">این صفحه نسخه نمایشی است.</p>
+        </div>
+
+        <form class="checkout-form" id="checkout-form" onsubmit="return false">
+          <h2 style="font-size:15px;margin-bottom:12px">اطلاعات ارسال</h2>
+          <div class="form-grid">
+            <input type="text" placeholder="نام و نام خانوادگی" required>
+            <input type="tel" placeholder="شماره موبایل" required>
+            <input class="full" type="text" placeholder="آدرس کامل" required>
+            <input type="text" placeholder="کد پستی">
+            <select><option>استان را انتخاب کنید</option><option>تهران</option><option>فارس</option><option>خراسان رضوی</option></select>
+            <button class="btn btn-primary full" type="button" data-demo-submit>ثبت سفارش نمایشی</button>
+          </div>
+        </form>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a class="logo" href="index.html"><img src="assets/brand-mark.svg" width="46" height="46" alt=""><span class="logo-text">کافی نت و لوازم تحریری قرائتی<small>GHARAATI</small></span></a><p>خرید ساده، سریع و مطمئن.</p></div><div><h4>دسترسی</h4><ul><li><a href="index.html">خانه</a></li><li><a href="category.html">محصولات</a></li></ul></div><div><h4>تماس</h4><ul><li>۰۹۱۲ ۱۲۳ ۴۵۶۷</li><li>آدرس فروشگاه شما</li></ul></div></div><div class="footer-bottom"><span>© ۱۴۰۵ کافی نت و لوازم تحریری قرائتی</span><span>نسخه نمایشی</span></div></div></footer>
+
+  <nav class="bottom-nav"><a href="index.html"><i>⌂</i>خانه</a><a href="category.html"><i>▦</i>محصولات</a><a class="active" href="cart.html"><i>🛒</i>سبد</a><a href="index.html#contact"><i>☎</i>تماس</a></nav>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="js/app.js" defer></script>
+</body>
+</html>
