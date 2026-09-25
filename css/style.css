@@ -332,3 +332,33 @@ html.dark .header{background:rgba(26,32,48,.88);border-color:var(--line)}
 }
 
 :focus-visible{outline:3px solid rgba(79,70,229,.35);outline-offset:3px}
+
+
+
+
+
+/* ═══ Theme Toggle Button ═══ */
+.theme-toggle {
+  font-size: 20px !important;
+  background: var(--primary-soft) !important;
+  border-color: var(--primary) !important;
+  color: var(--primary) !important;
+  transition: transform 0.3s ease, background 0.3s ease !important;
+}
+
+.theme-toggle:hover {
+  transform: rotate(20deg) scale(1.1) !important;
+  background: var(--primary) !important;
+  color: #fff !important;
+}
+
+html.dark .theme-toggle {
+  background: rgba(251, 191, 36, 0.15) !important;
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+}
+
+html.dark .theme-toggle:hover {
+  background: var(--accent) !important;
+  color: #2d2608 !important;
+}
