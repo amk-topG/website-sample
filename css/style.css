@@ -252,4 +252,6 @@ html.dark .header{background:rgba(26,32,48,.88);border-color:var(--line)}
 
 .gallery-item:hover::after {
   opacity: 1;
+
+
 }
